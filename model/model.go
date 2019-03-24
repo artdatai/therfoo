@@ -58,7 +58,7 @@ func (m *Model) Compile() error {
 	for l := range m.layers {
 		var weightsCount int
 		if l == 0 {
-			weightsCount = m.inputShape.Size()
+			weightsCount = int(m.inputShape.Size())
 		} else {
 			weightsCount = m.neuronsCount[l-1]
 		}
