@@ -1,28 +1,17 @@
 package activations
 
 import (
-	"github.com/therfoo/therfoo/tensor"
 	"math"
 )
 
-func Sigmoid(z *tensor.Vector) *tensor.Vector {
-	n := z.Len()
-	a := make(tensor.Vector, n, n)
-
-	z.Each(func(index int, value float64) {
-		a[index] = 1. / (1. + math.Exp(-value))
-	})
-
-	return &a
+func Sigmoid(z, a []float32) {
+	for i := range z {
+		a[i] = 1. / (1. + float32(math.Exp(float64(-z[i]))))
+	}
 }
 
-func SigmoidPrime(a *tensor.Vector) *tensor.Vector {
-	n := a.Len()
-	z := make(tensor.Vector, n, n)
-
-	a.Each(func(index int, value float64) {
-		z[index] = value * (1. - value)
-	})
-
-	return &z
+func SigmoidPrime(a, aPrime []float32) {
+	for i := range a {
+		aPrime[i] = a[i] * (1. - a[i])
+	}
 }

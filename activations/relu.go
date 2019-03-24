@@ -1,35 +1,21 @@
 package activations
 
-import (
-	"github.com/therfoo/therfoo/tensor"
-)
-
-func ReLU(z *tensor.Vector) *tensor.Vector {
-	n := z.Len()
-	a := make(tensor.Vector, n, n)
-
-	z.Each(func(index int, value float64) {
-		if value >= 0. {
-			a[index] = value
+func ReLU(z, a []float32) {
+	for i := range z {
+		if z[i] < 0. {
+			a[i] = 0.
 		} else {
-			a[index] = 0.
+			a[i] = z[i]
 		}
-	})
-
-	return &a
+	}
 }
 
-func ReLUPrime(a *tensor.Vector) *tensor.Vector {
-	n := a.Len()
-	d := make(tensor.Vector, n, n)
-
-	a.Each(func(index int, value float64) {
-		if value > 0. {
-			d[index] = 1.
+func ReLUPrime(a, aPrime []float32) {
+	for i := range a {
+		if a[i] > 0. {
+			aPrime[i] = 1.
 		} else {
-			d[index] = 0.
+			aPrime[i] = 0
 		}
-	})
-
-	return &d
+	}
 }

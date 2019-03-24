@@ -1,39 +1,24 @@
 package activations
 
 import (
-	"github.com/therfoo/therfoo/tensor"
 	"math"
 )
 
-func Softmax(z *tensor.Vector) *tensor.Vector {
+func Softmax(z, a []float32) {
 	max := .0
 
-	z.Each(func(index int, value float64) {
-		max = math.Max(max, value)
-	})
+	for i := range z {
+		max = math.Max(max, float64(z[i]))
+	}
 
-	n := z.Len()
-	a := make(tensor.Vector, n, n)
+	sum := float32(.0)
 
-	sum := .0
-	z.Each(func(index int, value float64) {
-		a[index] -= math.Exp(value - max)
-		sum += a[index]
-	})
+	for i := range z {
+		a[i] -= float32(math.Exp(float64(z[i]) - max))
+		sum += a[i]
+	}
 
-	a.Each(func(index int, value float64) {
-		a[index] = a[index] / sum
-	})
-	return &a
-}
-
-func SoftmaxPrime(a *tensor.Vector) *tensor.Vector {
-	n := a.Len()
-	z := make(tensor.Vector, n, n)
-
-	a.Each(func(index int, value float64) {
-		z[index] = 1
-	})
-
-	return &z
+	for i := range a {
+		a[i] = a[i] / sum
+	}
 }
