@@ -1,4 +1,4 @@
-package activations
+package activation
 
 func ReLU(z, a []float32) {
 	for i := range z {
@@ -10,12 +10,12 @@ func ReLU(z, a []float32) {
 	}
 }
 
-func ReLUPrime(a, aPrime []float32) {
+func ReLUDelta(a, aDelta []float32) {
 	for i := range a {
 		if a[i] > 0. {
-			aPrime[i] = 1.
+			aDelta[i] = 1.
 		} else {
-			aPrime[i] = 0
+			aDelta[i] = 0
 		}
 	}
 }
