@@ -1,4 +1,4 @@
-package activations
+package activation
 
 import (
 	"math"
@@ -10,8 +10,8 @@ func Sigmoid(z, a []float32) {
 	}
 }
 
-func SigmoidPrime(a, aPrime []float32) {
+func SigmoidDelta(a, aDelta []float32) {
 	for i := range a {
-		aPrime[i] = a[i] * (1. - a[i])
+		aDelta[i] = a[i] * (1. - a[i])
 	}
 }

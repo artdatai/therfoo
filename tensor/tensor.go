@@ -33,16 +33,17 @@ func (t Tensor) Dot(b Tensor) (sum float32) {
 
 // Each takes a function and calls with every top level
 // Tensor
-func (t Tensor) Each(f func(int, Tensor)) {
-	for i := 0; i < int(t.shape[0]); i++ {
+func (t Tensor) Each(f func(uint32, Tensor)) {
+	var i uint32
+	for i = 0; i < t.shape[0]; i++ {
 		f(i, t.Get(i))
 	}
 }
 
 // Get returns a top level Tensor at index i
-func (t Tensor) Get(i int) Tensor {
-	a := i * int(t.shape[1:].Size())
-	z := a + int(t.shape[1:].Size())
+func (t Tensor) Get(i uint32) Tensor {
+	a := i * t.shape[1:].Size()
+	z := a + t.shape[1:].Size()
 	return Tensor{data: t.data[a:z], shape: t.shape[1:]}
 }
 

@@ -9,20 +9,19 @@ type Option func(*Dense)
 func WithReLU() Option {
 	return func(d *Dense) {
 		d.activate = activations.ReLU
-		d.derive = activations.ReLUPrime
+		d.derive = activations.ReLUDelta
 	}
 }
 
 func WithSigmoid() Option {
 	return func(d *Dense) {
 		d.activate = activations.Sigmoid
-		d.derive = activations.SigmoidPrime
+		d.derive = activations.SigmoidDelta
 	}
 }
 
 func WithSoftmax() Option {
 	return func(d *Dense) {
 		d.activate = activations.Softmax
-		d.derive = activations.SoftmaxPrime
 	}
 }
